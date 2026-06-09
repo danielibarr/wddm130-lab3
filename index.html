@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 3 - Order Table</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>Client-Side Order Table</h1>
+
+    <section>
+
+        <p>
+            Customer Name
+        </p>
+        <input type="text" id="customerName">
+
+        <p>
+            Product Type
+        </p>
+        <select id="productType">
+            <option value="Laptop">Laptop</option>
+            <option value="Tablet">Tablet</option>
+            <option value="Phone">Phone</option>
+        </select>
+
+        <p>
+            Quantity
+        </p>
+        <input type="number" id="quantity">
+
+        <p>
+            Promo Code
+        </p>
+        <input type="text" id="promoCode">
+
+        <p>
+            Postal Code
+        </p>
+        <input type="text" id="postalCode">
+
+        <p>
+            Phone Number
+        </p>
+        <input type="text" id="phoneNumber">
+
+        <br><br>
+
+        <button onclick="addOrder()">
+            Add Order
+        </button>
+
+    </section>
+
+    <hr>
+
+    <section id="messageArea">
+
+    </section>
+
+    <table id="orderTable">
+
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Customer</th>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+                <th>Discount</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+
+        <tbody id="tableBody">
+
+        </tbody>
+
+    </table>
+
+    <hr>
+
+    <section id="summary">
+
+        <p>Total Orders: 0</p>
+        <p>Total Quantity: 0</p>
+        <p>Total Revenue: $0.00</p>
+
+    </section>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

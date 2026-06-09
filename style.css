@@ -1,0 +1,47 @@
+body{
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    color: black;
+    padding: 20px;
+}
+
+h1{
+    text-align: center;
+}
+
+input,
+select,
+button{
+    width: 250px;
+    padding: 8px;
+}
+
+button{
+    background-color: black;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+table{
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    margin-top: 20px;
+}
+
+th,
+td{
+    border: 1px solid black;
+    padding: 10px;
+    text-align: center;
+}
+
+th{
+    background-color: #d9d9d9;
+}
+
+#messageArea{
+    margin-top: 15px;
+    font-weight: bold;
+}
