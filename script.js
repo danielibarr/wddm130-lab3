@@ -1,165 +1,94 @@
-let orderCount = 0;
-let totalQuantity = 0;
-let totalRevenue = 0;
 
-function getPrice(productType){
+var tabTop=`<table>
+    <thead>
+        <tr><th>Name</th><th>Product</th><th>Qty</th><th>Sub Total</th><th>Total</th></tr>
+    </thead>
+    <tbody>`
+var tabCt=``
+var tabBot=`</tbody></table>`
 
-    if(productType === "Laptop"){
-        return 1000;
+
+
+function getPrice(type){
+    var price = 0;
+
+    if(type == "laptop"){
+        price = 1000;
+    }else if (type ==  "tablet"){
+        price = 600;
+    }else{
+        price = 400;
     }
-
-    if(productType === "Tablet"){
-        return 600;
-    }
-
-    return 400;
+    return price;
 }
 
-function calculateDiscount(subTotal, quantity, promoCode){
-
-    let discount = 0;
-
-    if(quantity >= 3){
-        discount += subTotal * 0.10;
+function calculateDiscount(subTotal, promoCode){
+    if(promocode ="SAVE20"){
+        subTotal -= 20;
     }
-
-    if(promoCode === "SAVE20"){
-        discount += 20;
-    }
-
-    return discount;
+    return subTotal;
 }
 
-function calculateFinalTotal(subTotal, discount){
+function calculateFinalTotal(subTotal, taxes){
 
-    let afterDiscount = subTotal - discount;
-
-    let tax = afterDiscount * 0.13;
-
-    return afterDiscount + tax;
+    return subTotal*(1+taxes/100);
 }
 
-function validateWithRegExp(expression, text){
-
-    return expression.test(text);
+function regTest(value, regEx){
+    return regEx.test(value);
 }
 
-function updateSummary(){
+function processForm(){
+    
+    var subTotal=0
+    var total = 0;
 
-    document.getElementById("summary").innerHTML =
-    `
-        <p>Total Orders: ${orderCount}</p>
-        <p>Total Quantity: ${totalQuantity}</p>
-        <p>Total Revenue: $${totalRevenue.toFixed(2)}</p>
-    `;
-}
-
-function addOrder(){
-
-    let customerName =
-    document.getElementById("customerName").value;
-
-    let productType =
-    document.getElementById("productType").value;
-
-    let quantity =
-    parseInt(document.getElementById("quantity").value);
-
-    let promoCode =
-    document.getElementById("promoCode").value;
-
-    let postalCode =
-    document.getElementById("postalCode").value;
-
-    let phoneNumber =
-    document.getElementById("phoneNumber").value;
-
-    let validName = customerName.trim();
-
-    let count = 0;
-
-    for(let i = 0; i < validName.length; i++){
-
-        count++;
-
+    var errors=""
+    var postPattern = /^[a-zA-Z]\d[a-zA-Z]\s\d[a-zA-Z]\d$/
+    var phonePattern =/^\d{3}(\s|-)\d{3}(\s|-)\d{4}$/
+    var fm = document.forms["custform"];
+    var name= fm["cname"].value;
+    var type= fm["ptype"].value;
+    var qty= fm["qty"].value;
+    var promo= fm["pcode"].value;
+    var postal= fm["postal"].value;
+    var phone= fm["phone"].value;
+   
+    if(name.length < 2){
+        errors+= `<h3>Name Should be at least 2 chars</h3>`
+    }
+    if(qty < 1){
+        errors+=`<h3>Quantity should at least be 1 </h3>`
+    }
+    if(!regTest(postal, postPattern)){
+            errors+=`<h3>Incorrect Postal Code e.g: A1B 3A5 </h3>`
     }
 
-    if(count < 2){
-
-        document.getElementById("messageArea").innerHTML =
-        "Customer name must contain at least 2 characters.";
-
-        return;
+    if(!regTest(phone, phonePattern)){
+            errors+=`<h3>Incorrect Phone Number e.g: 222 222 2222 </h3>`
     }
+    
+    if(errors !=""){
+        document.getElementById("right").innerHTML = errors;
+    }else{
+        document.getElementById("right").innerHTML =""
 
-    if(!Number.isInteger(quantity) || quantity < 1){
+        subTotal = getPrice(type) * qty;
+        subTotal = calculateDiscount(subTotal,promo).toFixed(2);
+        total = calculateFinalTotal(subTotal, 13).toFixed(2);
 
-        document.getElementById("messageArea").innerHTML =
-        "Quantity must be at least 1.";
+        tabCt = tabCt + `<tr>
+            <td>${name}</td>
+            <td>${type}</td>
+            <td>${qty}</td>
+            <td>${subTotal}</td>
+            <td>${total}</td>
+        </tr>`
 
-        return;
+        document.getElementById("right").innerHTML = tabTop+tabCt+tabBot;
+
     }
+   
 
-    let postalPattern =
-    /^[A-Za-z][0-9][A-Za-z]\s[0-9][A-Za-z][0-9]$/;
-
-    if(!validateWithRegExp(postalPattern, postalCode)){
-
-        document.getElementById("messageArea").innerHTML =
-        "Invalid postal code.";
-
-        return;
-    }
-
-    let phonePattern =
-    /^\(?\d{3}\)?[- ]\d{3}[- ]\d{4}$/;
-
-    if(!validateWithRegExp(phonePattern, phoneNumber)){
-
-        document.getElementById("messageArea").innerHTML =
-        "Invalid phone number.";
-
-        return;
-    }
-
-    let price = getPrice(productType);
-
-    let subTotal = price * quantity;
-
-    let discount =
-    calculateDiscount(
-        subTotal,
-        quantity,
-        promoCode
-    );
-
-    let finalTotal =
-    calculateFinalTotal(
-        subTotal,
-        discount
-    );
-
-    orderCount++;
-
-    totalQuantity += quantity;
-
-    totalRevenue += finalTotal;
-
-    document.getElementById("tableBody").innerHTML +=
-    `
-        <tr>
-            <td>${orderCount}</td>
-            <td>${customerName}</td>
-            <td>${productType}</td>
-            <td>${quantity}</td>
-            <td>$${subTotal.toFixed(2)}</td>
-            <td>$${discount.toFixed(2)}</td>
-            <td>$${finalTotal.toFixed(2)}</td>
-        </tr>
-    `;
-
-    document.getElementById("messageArea").innerHTML =
-    "Order added successfully.";
-
-    updateSummary();
+    return false;
 }

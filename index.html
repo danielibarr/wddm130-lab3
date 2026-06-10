@@ -3,95 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lab 3 - Order Table</title>
-
-    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css"/>
+    <script src="js/script.js"></script>
 </head>
 <body>
+    <header>
+        <h1>Customer Info</h1>
+    </header>
+    <main>
+        <div id="left">
+            <form name="custform" action="#" method="post" onsubmit=" return processForm()">
+                <fieldset>
+                    <legend>Add Customer Info</legend>
+                    <div>
+                        <label>Name: </label>
+                        <input type="text" name="cname" id="cname" required/>
+                    </div>
 
-    <h1>Client-Side Order Table</h1>
+                    <div>
+                        <label>Product Type: </label>
+                        <select name="ptype" id="ptype">
+                            <option>Laptop</option>
+                            <option>Tablet</option>
+                            <option>Phone</option>
+                        </select>
+                    </div>
 
-    <section>
+                    <div>
+                        <label>Quantity: </label>
+                        <input type="number" name="qty" id="qty"/>
+                    </div>
 
-        <p>
-            Customer Name
-        </p>
-        <input type="text" id="customerName">
+                    <div>
+                        <label>Promo Code</label>
+                        <input type="text" name="pcode" id="pcode"/>
+                    </div>
 
-        <p>
-            Product Type
-        </p>
-        <select id="productType">
-            <option value="Laptop">Laptop</option>
-            <option value="Tablet">Tablet</option>
-            <option value="Phone">Phone</option>
-        </select>
+                    <div>
+                        <label>Postal Code: </label>
+                        <input type="text" name="postal" id="postal"/>
+                    </div>
 
-        <p>
-            Quantity
-        </p>
-        <input type="number" id="quantity">
+                    <div>
+                        <label>Phone: </label>
+                        <input type="text" name="phone" id="phone"/>
+                    </div>
 
-        <p>
-            Promo Code
-        </p>
-        <input type="text" id="promoCode">
+                    <div id="formSubmit">
+                        <input type="submit" value="Submit"/>
+                        <input type="reset" value="Reset"/>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+        <div id ="right"></div>
+    </main>
 
-        <p>
-            Postal Code
-        </p>
-        <input type="text" id="postalCode">
-
-        <p>
-            Phone Number
-        </p>
-        <input type="text" id="phoneNumber">
-
-        <br><br>
-
-        <button onclick="addOrder()">
-            Add Order
-        </button>
-
-    </section>
-
-    <hr>
-
-    <section id="messageArea">
-
-    </section>
-
-    <table id="orderTable">
-
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Customer</th>
-                <th>Product</th>
-                <th>Quantity</th>
-                <th>Subtotal</th>
-                <th>Discount</th>
-                <th>Total</th>
-            </tr>
-        </thead>
-
-        <tbody id="tableBody">
-
-        </tbody>
-
-    </table>
-
-    <hr>
-
-    <section id="summary">
-
-        <p>Total Orders: 0</p>
-        <p>Total Quantity: 0</p>
-        <p>Total Revenue: $0.00</p>
-
-    </section>
-
-    <script src="script.js"></script>
-
+    
 </body>
 </html>
